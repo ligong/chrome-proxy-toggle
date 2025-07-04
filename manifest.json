@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Proxy Toggle",
+  "version": "1.0",
+  "description": "A simple extension to toggle a proxy on and off.",
+  "permissions": [
+    "proxy",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "128": "icons/icon-off-128.png"
+    },
+    "default_title": "Proxy is Off"
+  },
+  "icons": {
+    "128": "icons/icon-off-128.png"
+  },
+  "options_page": "options.html"
+}
