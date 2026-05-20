@@ -1,12 +1,12 @@
 let isProxyEnabled = false;
 
 // Function to enable the proxy
-function enableProxy(host, port) {
+function enableProxy(type, host, port) {
   const config = {
     mode: "fixed_servers",
     rules: {
       singleProxy: {
-        scheme: "http",
+        scheme: type,
         host: host,
         port: port
       },
@@ -15,7 +15,7 @@ function enableProxy(host, port) {
   };
 
   chrome.proxy.settings.set({ value: config, scope: 'regular' }, () => {
-    console.log("Proxy enabled");
+    console.log(`Proxy (${type}) enabled`);
     isProxyEnabled = true;
     updateIcon();
   });
@@ -50,9 +50,9 @@ chrome.action.onClicked.addListener(() => {
   if (isProxyEnabled) {
     disableProxy();
   } else {
-    chrome.storage.local.get(['proxyHost', 'proxyPort'], (result) => {
+    chrome.storage.local.get(['proxyType', 'proxyHost', 'proxyPort'], (result) => {
       if (result.proxyHost && result.proxyPort) {
-        enableProxy(result.proxyHost, result.proxyPort);
+        enableProxy(result.proxyType || 'http', result.proxyHost, result.proxyPort);
       } else {
         // Open options page if settings are not configured
         chrome.runtime.openOptionsPage();
